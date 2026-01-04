@@ -1,0 +1,6 @@
+hvac
+chromadb
+langchain-gigachat
+langchain
+pypdf
+langchain-community
