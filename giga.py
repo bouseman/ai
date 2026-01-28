@@ -46,18 +46,12 @@ loader = PyPDFLoader(pdf_path)
 documents = loader.load()
 
 
-# 2. Разделение текста на чанки
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,  # размер чанка
-    chunk_overlap=200,  # перекрытие между чанками
-    length_function=len,
-    separators=["\n\n\n", "\n\n", "\n"]    
-)
+# Удаляем старую базу данных перед созданием новой
+if os.path.exists("./chroma_db"):
+    shutil.rmtree("./chroma_db")
 
-chunks = text_splitter.split_documents(documents)
-print(f"Создано чанков: {len(chunks)}")
 
-# 4. Создание и сохранение векторной базы
+# 2. Создание и сохранение векторной базы
 vector_store = Chroma.from_documents(
     documents=documents,
     embedding=embeddings,
